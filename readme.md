@@ -1,1 +1,1 @@
-Crash Bandicoot N-Sane Trilogy countdown clock
+Crash Bandicoot N. Sane Trilogy countdown clock
