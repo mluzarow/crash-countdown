@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"> 
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/timer.js"></script>
+</head>
+
+<body>
+    <!-- Clock goes inside this container -->
+    <div id="clock_frame">
+        <img id="days_100" src="img/crash_0.png"/>
+        <img id="days_10" src="img/crash_0.png"/>
+        <img id="days_1" src="img/crash_0.png"/>
+        <img src="img/crash_colon.png"/>
+        <img id="hours_10" src="img/crash_0.png"/>
+        <img id="hours_1" src="img/crash_0.png"/>
+        <img src="img/crash_colon.png"/>
+        <img id="minutes_10" src="img/crash_0.png"/>
+        <img id="minutes_1" src="img/crash_0.png"/>
+        <img src="img/crash_colon.png"/>
+        <img id="seconds_10" src="img/crash_0.png"/>
+        <img id="seconds_1" src="img/crash_0.png"/> 
+    </div>
+    
+    <script>
+        localTime = new Date ().toISOString ();
+        document.body.innerHTML = localTime;
+    </script>
+</body>
+</html>
