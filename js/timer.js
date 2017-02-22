@@ -4,8 +4,6 @@ window.onload = function () {
 
 class dateTime {
     constructor () {
-        this.year = 0;
-        this.month = 0;
         this.day = 0;
         this.hour = 0;
         this.minute = 0;
@@ -21,14 +19,24 @@ function initialize () {
     var END_TIME = new Date ("2017-06-30T00:00:00.000Z");
     
     // Compare times and calculate difference
-    var remainingTime = new dateTime ();
+    var timeToGo = new dateTime ();
     
-    remainingTime.year = END_TIME.getFullYear () - serverTime.getFullYear ();
-    remainingTime.month = Math.abs (END_TIME.getMonth () - serverTime.getMonth ());
-    remainingTime.day = Math.abs (END_TIME.getDate () - serverTime.getDate ());
-    remainingTime.hour = Math.abs (END_TIME.getHours () - serverTime.getHours ());
-    remainingTime.minute = Math.abs (END_TIME.getMinutes () - serverTime.getMinutes ());
-    remainingTime.second = Math.abs (END_TIME.getSeconds () - serverTime.getSeconds ());
+    var remainingTime = END_TIME.getTime () - serverTime.getTime ();
+    // To seconds
+    remainingTime = parseInt (remainingTime / 1000);
+    // To Days
+    remainingTime = remainingTime / 60 / 60 / 24;
+    timeToGo.day = Math.floor (remainingTime);
+    // To hours
+    remainingTime = (remainingTime % timeToGo.day) * 60;
+    timeToGo.hour = Math.floor (remainingTime);
+    // To minutes
+    remainingTime = (remainingTime % timeToGo.hour) * 60;
+    timeToGo.minute = Math.floor (remainingTime);
+    // To seconds
+    remainingTime = (remainingTime % timeToGo.minute) * 60;
+    timeToGo.second = Math.floor (remainingTime);
     
+    console.log (timeToGo);
     console.log (remainingTime);
 }
