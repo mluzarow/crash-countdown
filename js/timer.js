@@ -12,6 +12,9 @@ class dateTime {
     }
 }
 
+// Release date (June 30th. 2017 @ 0:00:00)
+var END_TIME = new Date ("2017-06-30T00:00:00.000Z");
+
 var counter_sec_1 = null;
 var counter_sec_10 = null;
 var counter_min_1 = null;
@@ -25,10 +28,15 @@ var counter_day_100 = null;
 var timeToGo = new dateTime ();
 
 function initialize () {
-// Get the current server time
-    var serverTime = new Date ();
-    // Release date (June 30th. 2017 @ 0:00:00)
-    var END_TIME = new Date ("2017-06-30T00:00:00.000Z");
+    // Get the current server time
+    //var serverTime = new Date ();
+    
+    var request = new XMLHttpRequest ();
+    request.open ("HEAD", window.location.href.toString (), false);
+    request.setRequestHeader ("Content-Type", "text/html");
+    request.send ('');
+    var st = request.getResponseHeader ("Date");
+    var serverTime = new Date (st);
     
     // Compare times and calculate difference   
     var remainingTime = END_TIME.getTime () - serverTime.getTime ();
