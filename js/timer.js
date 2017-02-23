@@ -29,14 +29,7 @@ var timeToGo = new dateTime ();
 
 function initialize () {
     // Get the current server time
-    //var serverTime = new Date ();
-    
-    var request = new XMLHttpRequest ();
-    request.open ("HEAD", window.location.href.toString (), false);
-    request.setRequestHeader ("Content-Type", "text/html");
-    request.send ('');
-    var st = request.getResponseHeader ("Date");
-    var serverTime = new Date (st);
+    var serverTime = serverTimeRequest ();
     
     // Compare times and calculate difference   
     var remainingTime = END_TIME.getTime () - serverTime.getTime ();
@@ -79,6 +72,22 @@ function initialize () {
     counter_day_100.src = "img/crash_" + parseInt (timeToGo.day / 100) + ".png";
 }
 
+function serverTimeRequest () {
+    try {
+        var request = new XMLHttpRequest ();
+    } catch (error) {
+        console.log ("Unable to request server time; using user time.");
+        
+        return (new Date ());
+    }
+    
+    request.open ("HEAD", window.location.href.toString (), false);
+    request.setRequestHeader ("Content-Type", "text/html");
+    request.send ('');
+    var st = request.getResponseHeader ("Date");
+    
+    return (new Date (st));
+}
 // Shows the date in terms of crash bandicoot letter images
 function crashDate () {
     timeToGo.second -= 1;
