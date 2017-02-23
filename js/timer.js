@@ -25,9 +25,8 @@ var counter_day_100 = null;
 var timeToGo = new dateTime ();
 
 function initialize () {
-    // Get the current server time
-    serverTime = new Date ();
-    
+// Get the current server time
+    var serverTime = new Date ();
     // Release date (June 30th. 2017 @ 0:00:00)
     var END_TIME = new Date ("2017-06-30T00:00:00.000Z");
     
@@ -35,19 +34,19 @@ function initialize () {
     var remainingTime = END_TIME.getTime () - serverTime.getTime ();
     
     // To seconds
-    remainingTime = parseInt (remainingTime / 1000);
+    remainingTime = parseInt (Math.floor (remainingTime / 1000));
     // To Days
-    remainingTime = remainingTime / 60 / 60 / 24;
-    timeToGo.day = Math.floor (remainingTime);
+    remainingTime = ((remainingTime / 60) / 60) / 24;
+    timeToGo.day = parseInt (Math.floor (remainingTime));
     // To hours
-    remainingTime = (remainingTime % timeToGo.day) * 60;
+    remainingTime = (remainingTime % timeToGo.day) * 24;
     timeToGo.hour = Math.floor (remainingTime);
     // To minutes
-    remainingTime = (remainingTime % timeToGo.hour) * 60;
+    remainingTime = (timeToGo.hour != 0 ? (remainingTime % timeToGo.hour) * 60 : remainingTime * 60);
     timeToGo.minute = Math.floor (remainingTime);
     // To seconds
-    remainingTime = (remainingTime % timeToGo.minute) * 60;
-    timeToGo.second = Math.floor (remainingTime);
+    remainingTime = (timeToGo.minute != 0 ? (remainingTime % timeToGo.minute) * 60 : remainingTime * 60);
+    timeToGo.second = parseInt (Math.floor (remainingTime));
     
     // Get all the image boxes in here as well
     counter_sec_1 = document.getElementById ("seconds_1");
