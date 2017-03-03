@@ -49,6 +49,10 @@ li a:hover, #dropdown:hover #dropdown_btn {
 }
 
 /* Everything else */
+body {
+    margin: 0px;
+}
+
 #clock_frame {
     text-align: center;
 }
