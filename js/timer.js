@@ -36,6 +36,10 @@ function initialize () {
     
     if (remainingTime < 0) {
         remainingTime = 0;
+        timeToGo.day = 0;
+        timeToGo.hour = 0;
+        timeToGo.minute = 0;
+        timeToGo.second = 0;
     }
     
     // To seconds
