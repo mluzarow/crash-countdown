@@ -31,8 +31,8 @@ var timeToGo = new dateTime ();
 
 function initialize () {
     // Get the current server time
-    // var serverTime = serverTimeRequest ();
-    var serverTime = new Date ("2017-12-10T00:00:00.000Z");
+    var serverTime = serverTimeRequest ();
+    
     // Compare times and calculate difference
     var remainingTime = END_TIME.getTime () - serverTime.getTime ();
     
