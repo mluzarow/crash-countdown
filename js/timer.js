@@ -31,8 +31,12 @@ function initialize () {
     // Get the current server time
     var serverTime = serverTimeRequest ();
     
-    // Compare times and calculate difference   
+    // Compare times and calculate difference
     var remainingTime = END_TIME.getTime () - serverTime.getTime ();
+    
+    if (remainingTime < 0) {
+        remainingTime = 0;
+    }
     
     // To seconds
     remainingTime = parseInt (Math.floor (remainingTime / 1000));
@@ -110,7 +114,7 @@ function crashDate () {
                 counter_day_1.src = "img/crash_" + (timeToGo.day % 100 % 10) + ".png";
                 counter_day_10.src = "img/crash_" + parseInt (timeToGo.day % 100 / 10) + ".png";
                 counter_day_100.src = "img/crash_" + parseInt (timeToGo.day / 100) + ".png";
-            } 
+            }
             counter_hr_1.src = "img/crash_" + (timeToGo.hour % 10) + ".png";
             counter_hr_10.src = "img/crash_" + parseInt (timeToGo.hour / 10) + ".png";
         }
@@ -120,3 +124,4 @@ function crashDate () {
     counter_sec_1.src = "img/crash_" + (timeToGo.second % 10) + ".png";
     counter_sec_10.src = "img/crash_" + parseInt (timeToGo.second / 10) + ".png";
 }
+
