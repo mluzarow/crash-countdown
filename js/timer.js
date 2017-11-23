@@ -1,6 +1,8 @@
+var cashDateInterval;
+
 window.onload = function () {
 	initialize ();
-    window.setInterval (crashDate, 1000);
+    crashDateInterval = setInterval (crashDate, 1000);
 }
 
 class dateTime {
@@ -29,33 +31,32 @@ var timeToGo = new dateTime ();
 
 function initialize () {
     // Get the current server time
-    var serverTime = serverTimeRequest ();
-    
+    // var serverTime = serverTimeRequest ();
+    var serverTime = new Date ("2017-12-10T00:00:00.000Z");
     // Compare times and calculate difference
     var remainingTime = END_TIME.getTime () - serverTime.getTime ();
     
     if (remainingTime < 0) {
-        remainingTime = 0;
         timeToGo.day = 0;
         timeToGo.hour = 0;
         timeToGo.minute = 0;
         timeToGo.second = 0;
+    } else {
+        // To seconds
+        remainingTime = parseInt (Math.floor (remainingTime / 1000));
+        // To Days
+        remainingTime = ((remainingTime / 60) / 60) / 24;
+        timeToGo.day = parseInt (Math.floor (remainingTime));
+        // To hours
+        remainingTime = (remainingTime % timeToGo.day) * 24;
+        timeToGo.hour = Math.floor (remainingTime);
+        // To minutes
+        remainingTime = (timeToGo.hour != 0 ? (remainingTime % timeToGo.hour) * 60 : remainingTime * 60);
+        timeToGo.minute = Math.floor (remainingTime);
+        // To seconds
+        remainingTime = (timeToGo.minute != 0 ? (remainingTime % timeToGo.minute) * 60 : remainingTime * 60);
+        timeToGo.second = parseInt (Math.floor (remainingTime));
     }
-    
-    // To seconds
-    remainingTime = parseInt (Math.floor (remainingTime / 1000));
-    // To Days
-    remainingTime = ((remainingTime / 60) / 60) / 24;
-    timeToGo.day = parseInt (Math.floor (remainingTime));
-    // To hours
-    remainingTime = (remainingTime % timeToGo.day) * 24;
-    timeToGo.hour = Math.floor (remainingTime);
-    // To minutes
-    remainingTime = (timeToGo.hour != 0 ? (remainingTime % timeToGo.hour) * 60 : remainingTime * 60);
-    timeToGo.minute = Math.floor (remainingTime);
-    // To seconds
-    remainingTime = (timeToGo.minute != 0 ? (remainingTime % timeToGo.minute) * 60 : remainingTime * 60);
-    timeToGo.second = parseInt (Math.floor (remainingTime));
     
     // Get all the image boxes in here as well
     counter_sec_1 = document.getElementById ("seconds_1");
@@ -96,6 +97,7 @@ function serverTimeRequest () {
     
     return (new Date (st));
 }
+
 // Shows the date in terms of crash bandicoot letter images
 function crashDate () {
     timeToGo.second -= 1;
@@ -114,6 +116,12 @@ function crashDate () {
             if (timeToGo.hour < 0) {
                 timeToGo.hour = 23;
                 timeToGo.day -= 1;
+                
+                // days 0s - end script
+                if (timeToGo.day < 0) {
+                    window.clearInterval (crashDateInterval);
+                    return;
+                }
                 
                 counter_day_1.src = "img/crash_" + (timeToGo.day % 100 % 10) + ".png";
                 counter_day_10.src = "img/crash_" + parseInt (timeToGo.day % 100 / 10) + ".png";
